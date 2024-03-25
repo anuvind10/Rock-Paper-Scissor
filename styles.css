@@ -1,0 +1,12 @@
+body {
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#startButton {
+    height: 50px;
+    width: 100px;
+}

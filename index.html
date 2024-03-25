@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, paper and scissors</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="startButton">Start game</button>
+    <h2>Check the console for results! :)</h2>    
+</body>
+<script>
+    const BUTTON = document.getElementById("startButton");
+    const ROCK = "rock";
+    const PAPER = "paper";
+    const SCISSORS = "scissors";
+    var flag;
+    var playerWinCount;
+    var computerWinCount;
+    var possibleInputs = [ROCK,PAPER,SCISSORS];
+
+    // Randomly generate rock, paper or scissor as the computer choice
+    function getComputerChoice() {
+        var num = Math.floor((Math.random() * 3) + 1)
+        if (num == 1) {
+            return(ROCK);
+        }
+        else if (num == 2) {
+            return(PAPER);
+        }
+        else return(SCISSORS);
+    }
+
+    var playerSelection;
+    var computerSelection;
+
+    // Function to play a round and display who is the winner, or if it's a draw        
+    function playRound(playerSelection, computerSelection) {
+        if(playerSelection.toLowerCase() == "rock" && computerSelection.toLowerCase() == "paper") {
+            console.log("You Lose! Paper beats Rock!");
+            computerWinCount++;
+        }
+        else if (playerSelection.toLowerCase() == "rock" && computerSelection.toLowerCase() == "scissors") {
+            console.log("You Win! Rock beats Scissors!");
+            playerWinCount++;
+        }
+        else if (playerSelection.toLowerCase() == "paper" && computerSelection.toLowerCase() == "scissors") {
+            console.log("You Lose! Scissors beats Paper!");
+            computerWinCount++;
+        }
+        else if (playerSelection.toLowerCase() == "paper" && computerSelection.toLowerCase() == "rock") {
+            console.log("You Win! Paper beats Rock!");
+            playerWinCount++;
+        }
+        else if (playerSelection.toLowerCase() == "scissors" && computerSelection.toLowerCase() == "rock") {
+            console.log("You Lose! Rock beats Scissors!");
+            computerWinCount++;
+        }
+        else if (playerSelection.toLowerCase() == "scissors" && computerSelection.toLowerCase() == "paper") {
+            console.log("You Win! scissors beats paper!");
+            playerWinCount++;
+        }
+        else if (playerSelection.toLowerCase() == computerSelection.toLowerCase()) {
+            console.log("It's a Draw!");
+            computerWinCount++;
+            playerWinCount++;
+        }
+        else {
+            console.log("It's a Draw!");
+        }
+    }
+
+    //Check if the users input is valid.
+    function isValidInput(playerSelection) {
+        return playerSelection != null && possibleInputs.includes(playerSelection);
+    }
+
+    // To play a 5 round game
+    function playGame() {
+
+        for (let i = 0; i < 5; i++) {
+            while (true) {
+                playerSelection = prompt("Rock, Paper or Scissors?")
+                if (playerSelection == null) {
+                    flag = 1;
+                    break;
+                }
+
+                if(isValidInput(playerSelection)) {
+                    break;
+                }
+                else alert("Invalid entry, please try again.")
+            }
+
+            if (flag == 1) {
+                console.log("You forfieted, Computer Wins by default!")
+                return;
+            }
+
+            computerSelection = getComputerChoice();
+            playRound(playerSelection, computerSelection)
+        }
+        if (playerWinCount > computerWinCount) {
+            console.log("Congrats! You Win the game! :)");
+        }
+        else if (playerWinCount < computerWinCount) {
+            console.log("You lose the game! :( Better luck next time!");
+        }
+        else console.log("The game is a Draw!");
+        console.log("Your Score: ", playerWinCount);
+        console.log("Computer's Score", computerWinCount);
+    }
+    
+    // Star the game once the button is clicked
+    BUTTON.addEventListener("click",function() {
+        console.clear()
+        playerWinCount = 0;
+        computerWinCount = 0;
+        flag = 0;
+        playGame()
+    });
+
+</script>
+</html>
